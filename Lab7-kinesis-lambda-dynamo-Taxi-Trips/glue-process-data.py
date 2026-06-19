@@ -51,7 +51,7 @@ def save_results_to_s3(bucket, key, data):
 
 def main():
     table_name = 'trip_details'
-    s3_bucket = 'nl-aws-de-labs'
+    s3_bucket = 'udemy-aws-dataeng-labs'
     s3_key = f"completed_trips/aggregated_results_{datetime.now().strftime('%Y%m%d%H%M%S')}.json"
 
     # Scan DynamoDB table for data
