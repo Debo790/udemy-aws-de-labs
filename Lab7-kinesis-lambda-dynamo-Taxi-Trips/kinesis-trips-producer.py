@@ -37,14 +37,15 @@ def read_csv_file(file_path):
         return []
 
 def main():
-    region_name = 'us-east-1'
+    region_name = 'eu-west-1'
     trip_start_file = 'data/trip_start.csv'
     trip_end_file = 'data/trip_end.csv'
     start_stream_name = 'trip_start_stream'
     end_stream_name = 'trip_end_stream'
-    batch_size = 30
+    batch_size = 15
 
-    kinesis_client = boto3.client('kinesis', region_name=region_name)
+    session = boto3.Session(profile_name='debo-locale', region_name=region_name)
+    kinesis_client = session.client('kinesis')
 
     start_trips = read_csv_file(trip_start_file)
     end_trips = read_csv_file(trip_end_file)
@@ -61,7 +62,7 @@ def main():
             send_batch_to_kinesis(kinesis_client, filtered_end_trips, end_stream_name)
 
         logger.info("Completed a batch processing cycle. Waiting before the next batch.")
-        time.sleep(5)
+        time.sleep(3)
 
 if __name__ == "__main__":
     main()

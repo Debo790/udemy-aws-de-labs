@@ -7,7 +7,7 @@ from decimal import Decimal
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-region_name = 'us-east-1'
+region_name = 'eu-west-1'
 
 def lambda_handler(event, context):
     dynamodb = boto3.resource('dynamodb', region_name=region_name)

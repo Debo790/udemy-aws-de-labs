@@ -8,7 +8,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 # Specify the AWS region
-region_name = 'us-east-1'
+region_name = 'eu-west-1'
 
 def lambda_handler(event, context):
     # Initialize DynamoDB resource and specify the table
