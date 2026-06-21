@@ -8,7 +8,7 @@ docker run -it \
 -v ~/.aws:/home/glue_user/.aws \
 -v "${WORKSPACE_LOCATION}:/home/glue_user/workspace/" \
 -v "$(pwd)/jars:/home/glue_user/jars" \
--e AWS_PROFILE=default \
+-e AWS_PROFILE=debo-locale \
 -e DISABLE_SSL=true \
 --rm -p 4040:4040 -p 18080:18080 \
 --name glue_spark_submit \

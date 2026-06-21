@@ -23,7 +23,7 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 # Define S3 bucket paths
-s3_bucket_path = "s3://nl-deltalake/"
+s3_bucket_path = "s3://udemy-aws-dataeng-labs/"
 input_path = f"{s3_bucket_path}/raw_zone/{table_name}/"
 output_path = f"{s3_bucket_path}/lakehouse-dwh/{table_name}"
 
