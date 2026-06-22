@@ -9,10 +9,12 @@ from awsglue.utils import getResolvedOptions
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# args = getResolvedOptions(sys.argv, ["table_name"])
-# table_name = args["table_name"]
+args = getResolvedOptions(sys.argv, ["table_name"])
+table_name = args["table_name"]
 
-table_name = "orders"
+# table_name = "orders"
+# table_name = "order_items"
+# table_name = "products"
 
 # Initialize the Spark session
 spark = SparkSession.builder \
@@ -23,7 +25,7 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 # Define S3 bucket paths
-s3_bucket_path = "s3://nl-deltalake/"
+s3_bucket_path = "s3://udemy-aws-dataeng-labs/"
 input_path = f"{s3_bucket_path}/raw_zone/{table_name}/"
 output_path = f"{s3_bucket_path}/lakehouse-dwh/{table_name}"
 
