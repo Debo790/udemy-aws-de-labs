@@ -9,12 +9,12 @@ from awsglue.utils import getResolvedOptions
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# args = getResolvedOptions(sys.argv, ["table_name"])
-# table_name = args["table_name"]
+args = getResolvedOptions(sys.argv, ["table_name"])
+table_name = args["table_name"]
 
 # table_name = "orders"
 # table_name = "order_items"
-table_name = "products"
+# table_name = "products"
 
 # Initialize the Spark session
 spark = SparkSession.builder \
