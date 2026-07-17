@@ -3,3 +3,4 @@ boto3
 awswrangler
 pyspark
 delta-spark
+pymysql
