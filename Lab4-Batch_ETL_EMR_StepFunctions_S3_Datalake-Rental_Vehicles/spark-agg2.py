@@ -4,9 +4,9 @@ from pyspark.sql.functions import col, to_timestamp, unix_timestamp, sum, count,
 spark = SparkSession.builder.appName("VehicleLocationPerformance").getOrCreate()
 
 # Load datasets
-transactions = spark.read.csv("s3://nl-aws-de-labs/rental_vehicles/rental_transactions.csv", header=True, inferSchema=True)
-locations = spark.read.csv("s3://nl-aws-de-labs/rental_vehicles/locations.csv", header=True, inferSchema=True)
-vehicles = spark.read.csv("s3://nl-aws-de-labs/rental_vehicles/vehicles.csv", header=True, inferSchema=True)
+transactions = spark.read.csv("s3://udemy-aws-dataeng-labs/rental_vehicles//rental_transactions.csv", header=True, inferSchema=True)
+locations = spark.read.csv("s3://udemy-aws-dataeng-labs/rental_vehicles/locations.csv", header=True, inferSchema=True)
+vehicles = spark.read.csv("s3://udemy-aws-dataeng-labs/rental_vehicles/vehicles.csv", header=True, inferSchema=True)
 
 # Convert timestamps and calculate duration in hours
 transactions = transactions.withColumn("rental_start_time", to_timestamp(col("rental_start_time")))
@@ -44,7 +44,7 @@ vehicle_performance = location_vehicle_details.groupBy("vehicle_type") \
 # vehicle_performance.show(10)
 
 # Write results to S3
-location_performance.write.parquet("s3://nl-aws-de-labs/rental_vehicles/output/location_performance_metrics", mode="overwrite")
-vehicle_performance.write.parquet("s3://nl-aws-de-labs/rental_vehicles/output/vehicle_performance_metrics", mode="overwrite")
+location_performance.write.parquet("s3://udemy-aws-dataeng-labs/rental_vehicles/output/location_performance_metrics", mode="overwrite")
+vehicle_performance.write.parquet("s3://udemy-aws-dataeng-labs/rental_vehicles/output/vehicle_performance_metrics", mode="overwrite")
 
 spark.stop()

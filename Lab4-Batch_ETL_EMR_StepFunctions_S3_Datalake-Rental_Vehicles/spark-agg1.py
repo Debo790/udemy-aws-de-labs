@@ -4,8 +4,8 @@ from pyspark.sql.functions import col, to_timestamp, window, count, sum, avg, ma
 spark = SparkSession.builder.appName("TransactionUserAnalysis").getOrCreate()
 
 # Load datasets
-transactions = spark.read.csv("s3://nl-aws-de-labs/rental_vehicles/rental_transactions.csv", header=True, inferSchema=True)
-users = spark.read.csv("s3://nl-aws-de-labs/rental_vehicles/users.csv", header=True, inferSchema=True)
+transactions = spark.read.csv("s3://udemy-aws-dataeng-labs/rental_vehicles//rental_transactions.csv", header=True, inferSchema=True)
+users = spark.read.csv("s3://udemy-aws-dataeng-labs/rental_vehicles/users.csv", header=True, inferSchema=True)
 
 # Convert timestamps
 transactions = transactions.withColumn("rental_start_time", to_timestamp(col("rental_start_time")))
@@ -41,7 +41,7 @@ user_metrics = transaction_details.groupBy("user_id") \
 # user_metrics.show(10)
 
 # Write results to S3
-transaction_metrics.write.parquet("s3://nl-aws-de-labs/rental_vehicles/output/transaction_metrics", mode="overwrite")
-user_metrics.write.parquet("s3://nl-aws-de-labs/rental_vehicles/output/user_metrics", mode="overwrite")
+transaction_metrics.write.parquet("s3://udemy-aws-dataeng-labs/rental_vehicles/output/transaction_metrics", mode="overwrite")
+user_metrics.write.parquet("s3://udemy-aws-dataeng-labs/rental_vehicles/output/user_metrics", mode="overwrite")
 
 spark.stop()
