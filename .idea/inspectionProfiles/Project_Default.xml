@@ -1,0 +1,77 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyInterpreterInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="ipython-genutils" />
+          <option value="pandas-stubs" />
+          <option value="types-pytz" />
+          <option value="boto3" />
+          <option value="wsfcommonlibs" />
+          <option value="seaborn" />
+          <option value="scikit-learn" />
+          <option value="plotly" />
+          <option value="nbformat" />
+          <option value="charset-normalizer" />
+          <option value="pymongo-amplidata" />
+          <option value="pika" />
+          <option value="pytest" />
+          <option value="pytest-mock" />
+          <option value="beaupy" />
+          <option value="streamlit" />
+          <option value="redis" />
+          <option value="wsfprefectcommonlibs" />
+          <option value="botocore" />
+          <option value="dateparser" />
+          <option value="dnspython" />
+          <option value="docker" />
+          <option value="jmespath" />
+          <option value="joblib" />
+          <option value="python-slugify" />
+          <option value="requests" />
+          <option value="requests-oauthlib" />
+          <option value="rich" />
+          <option value="s3fs" />
+          <option value="s3pypi" />
+          <option value="s3transfer" />
+          <option value="aiohttp" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="E501" />
+          <option value="W605" />
+          <option value="E266" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N802" />
+          <option value="N806" />
+          <option value="N803" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyStubPackagesAdvertiser" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="boto3" />
+          <option value="pandas" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="pathlib.Path.*" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
