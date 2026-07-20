@@ -3,7 +3,7 @@ import uuid
 from decimal import Decimal
 
 # Initialize a DynamoDB client
-dynamodb = boto3.resource('dynamodb')
+dynamodb = boto3.resource('dynamodb', region_name="eu-west-1")
 table = dynamodb.Table('incremental_load_configurations')
 
 def upload_data_to_dynamodb():

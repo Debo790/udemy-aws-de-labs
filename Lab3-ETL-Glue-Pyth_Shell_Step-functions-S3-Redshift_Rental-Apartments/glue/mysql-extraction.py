@@ -40,7 +40,7 @@ db_name = "rental-apartments-db"
 s3_bucket = "udemy-aws-dataeng-labs"
 s3_key = f'raw_landing_zone/apartment_db/{table_name}/data.csv'
 
-dynamodb = boto3.resource('dynamodb')
+dynamodb = boto3.resource('dynamodb', region_name="eu-west-1")
 config_table = dynamodb.Table('incremental_load_configurations')
 
 def fetch_configurations(table_name):
