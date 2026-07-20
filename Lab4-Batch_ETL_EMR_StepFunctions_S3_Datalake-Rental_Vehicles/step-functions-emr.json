@@ -54,7 +54,7 @@
               "spark-submit",
               "--deploy-mode",
               "cluster",
-              "s3://nl-aws-de-labs/spark-scripts/spark-agg1.py"
+              "s3://udemy-aws-dataeng-labs/spark-scripts/spark-agg1.py"
             ]
           }
         }
@@ -82,7 +82,7 @@
               "spark-submit",
               "--deploy-mode",
               "cluster",
-              "s3://nl-aws-de-labs/spark-scripts/spark-agg2.py"
+              "s3://udemy-aws-dataeng-labs/spark-scripts/spark-agg2.py"
             ]
           }
         }
