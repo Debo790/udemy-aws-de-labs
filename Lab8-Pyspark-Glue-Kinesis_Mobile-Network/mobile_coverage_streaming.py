@@ -36,7 +36,7 @@ try:
     raw_data_frame = glueContext.create_data_frame.from_options(
         connection_type="kinesis",
         connection_options={
-            "streamARN": "arn:aws:kinesis:us-east-1:127489365181:stream/mobile_coverage_logs",
+            "streamARN": "arn:aws:kinesis:eu-west-1:135053816219:stream/mobile_coverage_logs",
             "classification": "json",
             "startingPosition": "latest",
             "inferSchema": "true"
@@ -99,8 +99,8 @@ try:
         col("count").alias("status_count")
     )
     
-    s3_path = "s3://nl-streaming-output/aggregations/"
-    s3_path_checkpoint = "s3://nl-streaming-output/checkpoints/"
+    s3_path = "s3://udemy-aws-dataeng-labs/aggregations/"
+    s3_path_checkpoint = "s3://udemy-aws-dataeng-labs/checkpoints/"
     
     signal_strength_by_operator = signal_strength_by_operator_df.writeStream \
         .format("parquet") \

@@ -10,7 +10,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 # Specify AWS region
-aws_region = "us-east-1"
+aws_region = "eu-west-1"
+
 
 def process_csv_to_kinesis(file_name):
     
@@ -54,6 +55,7 @@ def process_csv_to_kinesis(file_name):
 
     logger.info(f"Finished processing. Total records sent: {counter}")
     return f"Processed {counter} records from {file_name}."
+
 
 if __name__ == "__main__":
     
