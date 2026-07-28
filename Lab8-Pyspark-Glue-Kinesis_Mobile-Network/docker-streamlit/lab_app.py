@@ -2,13 +2,12 @@ import streamlit as st
 import pandas as pd
 import boto3
 import time
-from datetime import datetime
 from botocore.config import Config
 
 # Configuration
-REGION_NAME = 'us-east-1'
+REGION_NAME = 'eu-west-1'
 ATHENA_DATABASE = 'mobile_network_aggregations'
-S3_OUTPUT = 's3://nl-streaming-output/query_output/'
+S3_OUTPUT = 's3://udemy-aws-dataeng-labs/query_output/'
 
 # Athena table names
 TABLES = {
@@ -46,6 +45,7 @@ TABLES = {
 session = boto3.Session()
 athena = session.client('athena', region_name=REGION_NAME, config=Config())
 
+
 def query_athena(query):
     response = athena.start_query_execution(
         QueryString=query,
@@ -70,12 +70,14 @@ def query_athena(query):
         st.error(f"Query failed to run by returning code of {status}.")
         return pd.DataFrame()
 
+
 def display_table(title, df):
     if not df.empty:
         st.subheader(title)
         st.dataframe(df)
     else:
         st.write(f"No data available for {title}.")
+
 
 # Streamlit app layout
 st.title('Mobile Network Real-Time Dashboard')
@@ -88,6 +90,7 @@ for table, info in TABLES.items():
     df.columns = info['columns']  # Ensure correct column names
     display_table(table.replace('_', ' ').title(), df)
 
+
 # Setup auto-refresh
 def auto_refresh(refresh_interval):
     # Display a message and countdown
@@ -98,5 +101,6 @@ def auto_refresh(refresh_interval):
     st_autorefresh.text("Refreshing data...")
     st.experimental_rerun()
 
+
 # Specify the refresh interval (600 seconds = 10 minutes)
-auto_refresh(600)
+auto_refresh(120)
