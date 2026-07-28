@@ -24,6 +24,6 @@ docker run -p 8501:8501 \
   -v "${HOME}/.aws:/root/.aws" \
   "${LOCAL_IMAGE}"
 
-docker tag "${LOCAL_IMAGE}:latest" "${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+#docker tag "${LOCAL_IMAGE}:latest" "${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
 
-docker push "${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+# docker push "${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"

@@ -6,16 +6,36 @@ from botocore.config import Config
 
 # Configuration
 REGION_NAME = 'eu-west-1'
-ATHENA_DATABASE = 'presentation_lab'
+ATHENA_DATABASE = 'mobile_network_aggregations'
 S3_OUTPUT = 's3://udemy-aws-dataeng-labs/query_output/'
 
 # Athena table names
 TABLES = {
-    'customer_entity': {
-        'columns': ['customerid', 'entitytype', 'event_count', 'partition_hour', 'window_start', 'window_end'],
+    'gps_precision_by_provider': {
+        'columns': ['provider', 'average_precision', 'average_satellites', 'partition_hour', 'window_start', 'window_end'],
         'query': """
-            SELECT customerid, entitytype, event_count, partition_hour, window_start, window_end
-            FROM "{database}"."customer_entity"
+            SELECT provider, ROUND(average_precision, 2) as average_precision, 
+                   ROUND(average_satellites, 2) as average_satellites, partition_hour, window_start, window_end
+            FROM "{database}"."gps_precision_by_provider"
+            ORDER BY CAST(window_start AS TIMESTAMP) DESC
+            LIMIT 10
+        """
+    },
+    'signal_strength_by_operator': {
+        'columns': ['operator', 'average_signal', 'partition_hour', 'postal_code', 'window_start', 'window_end'],
+        'query': """
+            SELECT operator, ROUND(average_signal, 0) as average_signal, 
+                   partition_hour, postal_code, window_start, window_end
+            FROM "{database}"."signal_strength_by_operator"
+            ORDER BY CAST(window_start AS TIMESTAMP) DESC
+            LIMIT 10
+        """
+    },
+    'status_count': {
+        'columns': ['status', 'status_count', 'partition_hour', 'postal_code', 'window_start', 'window_end'],
+        'query': """
+            SELECT status, status_count, partition_hour, postal_code, window_start, window_end
+            FROM "{database}"."status_count"
             ORDER BY CAST(window_start AS TIMESTAMP) DESC
             LIMIT 10
         """
@@ -60,8 +80,8 @@ def display_table(title, df):
 
 
 # Streamlit app layout
-st.title('Entity Bookings Real-Time Dashboard')
-st.write('Displaying the latest data from various metrics. Refreshes every 2 minutes.')
+st.title('Mobile Network Real-Time Dashboard')
+st.write('Displaying the latest data from various metrics. Refreshes every 10 minutes.')
 
 # Fetch and display data from all tables
 for table, info in TABLES.items():
@@ -82,5 +102,5 @@ def auto_refresh(refresh_interval):
     st.experimental_rerun()
 
 
-# Specify the refresh interval (120 seconds = 2 minutes)
+# Specify the refresh interval (600 seconds = 10 minutes)
 auto_refresh(120)
