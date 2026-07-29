@@ -97,7 +97,7 @@ def process_json_to_kinesis(path="data/messages.json"):
             content = record.get("message").get("content")
             content_obj = json.loads(content) if isinstance(content, str) else content
             response = kinesis_client.put_record(
-                StreamName="entity_booking",
+                StreamName="presentation_entity_booking",
                 Data=json.dumps(content_obj).encode("utf-8"),
                 PartitionKey=partition_key
             )
@@ -118,7 +118,7 @@ def process_json_to_kinesis(path="data/messages.json"):
 
 if __name__ == "__main__":
 
-    file_name = "data/mobile-logs.csv"
+    # file_name = "data/mobile-logs.csv"
     path = "data/messages.json"
     try:
         result = process_json_to_kinesis(path)

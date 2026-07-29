@@ -77,8 +77,49 @@ try:
         date_format(col("window.start"), "HH").alias("partition_hour")
     )
 
-    s3_path = "s3://udemy-aws-dataeng-labs/aggregations/"
-    s3_path_checkpoint = "s3://udemy-aws-dataeng-labs/checkpoints/"
+    aggregated_by_phase_entity = data_frame_with_watermark.groupBy(
+        window(col("timestamp"), "2 minutes"),
+        col("oddsPhase"),
+        col("entityType")
+    ).agg(
+        count("*").alias("event_count")
+    ).select(
+        col("window.start").alias("window_start"),
+        col("window.end").alias("window_end"),
+        col("oddsPhase"),
+        col("entityType"),
+        col("event_count"),
+        date_format(col("window.start"), "HH").alias("partition_hour")
+    )
+
+    aggregated_by_day = data_frame_with_watermark.groupBy(
+        window(col("timestamp"), "1 day")
+    ).agg(
+        count("*").alias("event_count")
+    ).select(
+        col("window.start").alias("window_start"),
+        col("window.end").alias("window_end"),
+        col("event_count"),
+        date_format(col("window.start"), "yyyy-MM-dd").alias("partition_date")
+    )
+
+    aggregated_by_competition_entity = data_frame_with_watermark.groupBy(
+        window(col("timestamp"), "2 minutes"),
+        col("competitionId"),
+        col("entityType")
+    ).agg(
+        count("*").alias("event_count")
+    ).select(
+        col("window.start").alias("window_start"),
+        col("window.end").alias("window_end"),
+        col("competitionId"),
+        col("entityType"),
+        col("event_count"),
+        date_format(col("window.start"), "HH").alias("partition_hour")
+    )
+
+    s3_path = "s3://udemy-aws-dataeng-labs/aws_presentation/aggregations/"
+    s3_path_checkpoint = "s3://udemy-aws-dataeng-labs/aws_presentation/checkpoints/"
 
     customer_entity = (aggregated_df.writeStream
                        .format("parquet")
@@ -86,11 +127,41 @@ try:
                        .option("checkpointLocation", s3_path_checkpoint + "customer_entity/")
                        .partitionBy("partition_hour", "customerId")
                        .outputMode("append")
-                       .trigger(processingTime="20 seconds")
+                       .trigger(processingTime="1 minute")
                        .start())
+
+    phase_entity_query = (aggregated_by_phase_entity.writeStream
+                          .format("parquet")
+                          .option("path", s3_path + "phase_entity/")
+                          .option("checkpointLocation", s3_path_checkpoint + "phase_entity/")
+                          .partitionBy("partition_hour")
+                          .outputMode("append")
+                          .trigger(processingTime="1 minute")
+                          .start())
+
+    daily_query = (aggregated_by_day.writeStream
+                   .format("parquet")
+                   .option("path", s3_path + "daily/")
+                   .option("checkpointLocation", s3_path_checkpoint + "daily/")
+                   .partitionBy("partition_date")
+                   .outputMode("append")
+                   .trigger(processingTime="1 minute")
+                   .start())
+
+    competition_entity_query = (aggregated_by_competition_entity.writeStream
+                                .format("parquet")
+                                .option("path", s3_path + "competition_entity/")
+                                .option("checkpointLocation", s3_path_checkpoint + "competition_entity/")
+                                .partitionBy("partition_hour")
+                                .outputMode("append")
+                                .trigger(processingTime="1 minute")
+                                .start())
 
     logger.info("Starting the streaming jobs.")
     customer_entity.awaitTermination()
+    phase_entity_query.awaitTermination()
+    daily_query.awaitTermination()
+    competition_entity_query.awaitTermination()
 
 except Exception as e:
     logger.error("An error occurred: ", exc_info=True)
