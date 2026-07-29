@@ -19,6 +19,33 @@ TABLES = {
             ORDER BY CAST(window_start AS TIMESTAMP) DESC
             LIMIT 10
         """
+    },
+    'phase_entity': {
+        'columns': ['oddsphase', 'entitytype', 'event_count', 'partition_hour', 'window_start', 'window_end'],
+        'query': """
+            SELECT oddsphase, entitytype, event_count, partition_hour, window_start, window_end
+            FROM "{database}"."phase_entity"
+            ORDER BY CAST(window_start AS TIMESTAMP) DESC
+            LIMIT 10
+        """
+    },
+    'daily': {
+        'columns': ['event_count', 'partition_date', 'window_start', 'window_end'],
+        'query': """
+            SELECT event_count, partition_date, window_start, window_end
+            FROM "{database}"."daily"
+            ORDER BY CAST(window_start AS TIMESTAMP) DESC
+            LIMIT 10
+        """
+    },
+    'competition_entity': {
+        'columns': ['competitionid', 'entitytype', 'event_count', 'partition_hour', 'window_start', 'window_end'],
+        'query': """
+            SELECT competitionid, entitytype, event_count, partition_hour, window_start, window_end
+            FROM "{database}"."competition_entity"
+            ORDER BY CAST(window_start AS TIMESTAMP) DESC
+            LIMIT 10
+        """
     }
 }
 
